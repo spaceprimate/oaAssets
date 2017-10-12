@@ -113,8 +113,11 @@ nav.navbar-main .nav>li>a:focus {
 
 .user-info {
     padding: 5px 0;
-    color: #1e85a7;
+    color: #8fdaf3;
 }
+
+.navbar.navbar-user .nav>li>.btn.btn-link{color: #fff; font-size: 13px; font-weight: 300; padding-top: 5px; padding-bottom: 5px;}
+.navbar.navbar-main .nav>li>.btn.btn-link{color: #fff; font-size: 13px; font-weight: 300; padding-top: 12px; padding-bottom: 12px;}
 
 
 /*
