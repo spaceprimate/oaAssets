@@ -534,11 +534,16 @@ function verticalAlign(id){
  * Even if content doesn't fill up the sreen, make sure the footer is still on the bottom of the screen. 
  */
 function updateFooterLocation() {
-    var windowHeight = $(window).height();
-    var difference = windowHeight - ($("#footer").offset().top + $("#footer").outerHeight());
-    if (difference > 0) {
-        $("#main").css('min-height', $("#main").height() + difference);
+
+
+    if ($("#footer").length > 0){
+        var windowHeight = $(window).height();
+        var difference = windowHeight - ($("#footer").offset().top + $("#footer").outerHeight());
+        if (difference > 0) {
+            $("#main").css('min-height', $("#main").height() + difference);
+        }
     }
+    
 }
 
 //init
