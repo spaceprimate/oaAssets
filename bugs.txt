@@ -1,4 +1,4 @@
-[] - 	submit button not working
+[x] - 	submit button not working
 [] - 	for section indicator not adding "complete" class
 [] - 	some of the radio buttons that fail checks aren't triggering correctly
 [] - 	
@@ -11,3 +11,9 @@
 [] - 	
 [] - 	
 [] - 	
+
+
+
+
+================= REMEMBER ========================
+set the #parse files back to the original with "templates/" preceeding the vm file. 

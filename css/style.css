@@ -177,6 +177,7 @@ select.form-control {
 
 .form-progress .badge.visited {
     cursor: pointer;
+    background: #5cb85c;
 }
 
 .form-progress .badge.visited:hover {
@@ -188,10 +189,10 @@ select.form-control {
 }
 
 .form-progress .badge.success {
-    background: #5cb85c
+    background: #5cb85c;
 }
 
-.form-progress .badge.error {
+.form-progress .badge.error, .form-progress .badge.visited.error {
     background: #a94442;
 }
 
