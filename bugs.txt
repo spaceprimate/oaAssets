@@ -19,3 +19,8 @@
 set the #parse files back to the original with "templates/" preceeding the vm file. 
 
 ask what they want to do about the footer
+
+=== TO SUBMIT ===================================
+productRequest.vm
+oaml.js
+productRequest.js
