@@ -1,8 +1,8 @@
 [x] - 	submit button not working
-[] - 	for section indicator not adding "complete" class
-[] - 	some of the radio buttons that fail checks aren't triggering correctly
-[] - 	
-[] - 	
+[x] - 	for section indicator not adding "complete" class
+[x] - 	some of the radio buttons that fail checks aren't triggering correctly
+[] - 	clean up and double check the code
+[] - 	outline what you need to submit, then submit
 [] - 	
 [] - 	
 [] - 	
@@ -17,3 +17,5 @@
 
 ================= REMEMBER ========================
 set the #parse files back to the original with "templates/" preceeding the vm file. 
+
+ask what they want to do about the footer
