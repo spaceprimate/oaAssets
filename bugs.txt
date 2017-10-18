@@ -1,0 +1,13 @@
+[] - 	submit button not working
+[] - 	for section indicator not adding "complete" class
+[] - 	some of the radio buttons that fail checks aren't triggering correctly
+[] - 	
+[] - 	
+[] - 	
+[] - 	
+[] - 	
+[] - 	
+[] - 	
+[] - 	
+[] - 	
+[] - 	

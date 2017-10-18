@@ -49,7 +49,7 @@ $(document).ready(function () {
 
     // [x]
     //submit form if valid
-    $(".submit").click(function (e) {
+    $("#submit-form").click(function (e) {
         e.preventDefault();
         console.log("validate was called at all?");
         if (validation.validate("#section1, #section2, #section3, #section4")) {
