@@ -1,0 +1,302 @@
+#set( $pageTitle = "Product Request" )
+#parse("templates/header.vm")
+<script type="text/javascript" src="https://spaceprimate.github.io/oaAssets/js/productRequest.js"></script>
+
+<div class="container" style="min-height: 724.5px;">
+    <h5 class="text-center" style="margin: 0 0 18px 0">Product Request Form</h5>
+    <div class="row">
+
+        <div class="col-md-8 col-md-offset-2" style="margin-bottom: 18px;">
+            <div class="row form-progress" id="form-progress">
+                <div class="col-xs-3 text-center col" id="form-progress-1">
+                    <span class="badge current visited" title="Personal Info" alt="Personal Info">1</span>
+                    <br>
+                    <span class="text-sm text-muted">Personal Info</span>
+                </div>
+                <div class="col-xs-3 text-center col" id="form-progress-2">
+                    <span class="badge">2</span>
+                    <br>
+                    <span class="text-sm text-muted" title="Product Info" alt="Product Info">Product Info</span>
+                </div>
+                <div class="col-xs-3 text-center col" id="form-progress-3">
+                    <span class="badge" title="Foreign Disclosure" alt="Foreign Disclosure">3</span>
+                    <br>
+                    <span class="text-sm text-muted">Foreign Disclosure</span>
+                </div>
+                <div class="col-xs-3 text-center col" id="form-progress-4">
+                    <span class="badge" title="Questionnaire" alt="Questionnaire">4</span>
+                    <br>
+                    <span class="text-sm text-muted">Questionnaire</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            <div class="form-wrapper">
+                <h5 class="text-danger hidden" id="form-validation-status">Required information missing. Please complete all fields.</h5>
+                <form id="productRequest" action="/Inventory" method="post" novalidate>
+                    <section id="section1" class="form-section">
+                            <h3>Personal Information</h3>
+                            <fieldset>
+                                <div class="form-group has-feedback">
+                                    <label for="disabledAgency">1. Your Agency: </label>
+                                    <input type="text" id="disabledAgency" class="form-control" value="$user.Agency" required>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label for="disabledOtherAgency">2. Specified Agency: </label>
+                                    <input type="text" id="disabledOtherAgency" class="form-control" value="$user.SpecifiedAgency" required>
+                                </div>
+                            </fieldset>
+                            #if ($user.isContractor() && $!contracts.size()>0)
+                                <fieldset>
+                                    <div class="form-group has-feedback">
+                                        <label for="selectedContract">Select contract: </label>
+                                        <select class="form-control" id="selectedContract">
+                                            #foreach($contract in $contracts)
+                                                <option>$contract.getContractName() - #$contract.getContractNumber()</option>
+                                            #end
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            #end
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>3. Mailing Address:</label>
+                                    <div class="form-group has-feedback">
+                                        <label for="addressLine1">Address Line 1</label>
+                                        <input type="text" id="addressLine1" name="AddressLine1" class="form-control" value="123 Example St." required>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label for="addressLine2">Address Line 2</label>
+                                        <input type="text" id="addressLine2" name="AddressLine2" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group has-feedback">
+                                        <div class="form-group has-feedback">
+                                            <label for="cityTown">City/Town</label>
+                                            <input type="text" id="cityTown" name="CityTown" class="form-control" value="Sunnyville" required>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="state">State</label>
+                                            <input type="text" id="state" name="State" class="form-control" value="Louisiana" required>
+                                        </div>
+
+                                        <label for="zipCode">Zip Code</label>
+                                        <input type="text" id="zipCode" name="ZipCode" class="form-control" value="12345" required>
+                                    </div>
+                                </div>
+                            </div>
+                    </section>
+                    <section id="section2" class="form-section hidden">
+                        <h3>Product Information</h3>
+                        <fieldset>
+                            <div class="form-group has-feedback" required>
+                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#productModal">Select Product(s)</button>
+                                <div class="modal fade" id="productModal" role="dialog">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLiveLabel">Select Products</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div id="productmodal" class="modal-body">#products()</div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-link" id="clear-products">Clear products</button>
+                                                <button class="btn btn-success" type="button" data-dismiss="modal">Done</button>
+
+                                                <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                    <button type="button" id="addProducts" class="btn btn-success" data-dismiss="modal">Add Products</button> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="selectedProducts" class="form-group">
+                                <label class="show-active">You selected:</label>
+                                <label class="hide-active">No products selected</label>
+
+                                <ul class="list-group"></ul>
+                            </div>
+                            <input id="hiddenProducts" type="hidden" name="Products" />
+                        </fieldset>
+                        <div class="form-group has-feedback" id="RequireDocumentation">
+                            <label>4b. Do you require documentation with the software? </label>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" id="yes" value="yes" name="RequireDocumentation" required> Yes
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" id="no" value="no" name="RequireDocumentation" required> No
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback" id="MailingPreference">
+                            <label>4c. Please select a mailing preference: </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="MailingPreference" value="PersonalPickUp" required> Personal Pick-Up (NAVOCEANO Mailroom)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="MailingPreference" value="RegisteredMail" required> Registered Mail
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="MailingPreference" value="RegularMail" required> Regular Mail
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="MailingPreference" value="ExpressMail" required> Express Mail (FedEx)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="MailingPreference" value="AMRDEC" required> AMRDEC (*For UNCLASSIFIED products only!*)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="MailingPreference" value="Email" required> Email
+                                </label>
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="intendedUse">5d. Please provide a brief description of the intended use of requested products and Customer
+                                Identification. </label>
+                            <textarea name="IntendedUse" class="form-control" maxlength="250" required>Research and development required</textarea>
+                            <p id="intendedUseHelp" class="form-text text-muted">
+                                Maximum of 250 characters
+                            </p>
+                        </div>
+                        <div class="form-group has-feedback" id="MediaPreference">
+                            <label for="mediaPreference">6. Please select your media preference: </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="MediaPreference" value="CDRom" required> CD-Rom
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="MediaPreference" value="DVD" required> DVD
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label>7. Requestor AND Government Sponsor E-mail addresses: </label>
+                            <label for="requestorEmail">Requestor E-mail Address: </label>
+                            <input type="email" class="form-control" id="requestorEmail" name="RequestorEmail" value="$user.Email">
+                            <label for="sponsorEmail">Sponsor E-mail Address: </label>
+                            <input type="email" class="form-control" id="requestorEmail" name="SponsorEmail" value="mysponsorsemail@example.com">
+                        </div>
+                    </section>
+
+                    <section id="section3" class="form-section hidden">
+                        <h3>Foreign Disclosure</h3>
+                        <div class="form-group has-feedback" id="ForeignDisclosure" required>
+                            <label>8. FOREIGN DISCLOSURE: </label>
+                            <p class="form-check">
+                                <label class="form-check-label">
+
+                                    <input class="form-check-input" type="radio" name="ForeignDisclosure" value="NoForeignNationals" required> I, the Government Sponsor, hereby certify that the requested information will
+                                    <strong>NOT</strong> be provided or otherwise exposed to Foreign Nationals in any form, either
+                                    standalone or as embedded information within a system.
+                                </label>
+                            </p>
+                            <p class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="ForeignDisclosure" value="StandaloneForeignNationals" required> The requested information is intended for provision or other exposure to Foreign Nationals,
+                                    in standalone form.
+                                </label>
+                            </p>
+                            <p class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="ForeignDisclosure" value="EmbeddedForeignNationals" required> The requested information is intended for provision or other exposure to Foreign Nationals,
+                                    as embedded information within a system.
+                                </label>
+                            </p>
+                        </div>
+                        <div class="form-group has-feedback" id="foreignInformation">
+                            <div class="row"></div>
+                            <label for="countryName">Name of Country: </label>
+                            <input type="text" id="countryName" name="CountryName" value="Not America" class="form-control">
+                            <label for="govmtOrg">Name of foreign government organization: </label>
+                            <input type="text" id="govmtOrg" name="GovernmentOrg" class="form-control" value="Non American Organization">
+                            <label for="fmsCaseDesMan">FMS Case designator and manager: </label>
+                            <input type="text" id="fmsCaseDesMan" name="FMSCaseDesignatorManager" class="form-control" value="Somebody Important">
+                        </div>
+                    </section>
+                    <section id="section4" class="form-section hidden">
+                        <h2 class="text-center">Questionnaire</h2>
+                        <p class="form-text text-muted text-center"> All questionnaire responses should be complete and specific. Any requests for DBDB-V Level 3 shall
+                            be reviewed for release by the CNO's Office, Director - Strategic System Programs.</p>
+                        <div class="form-group" id="question1">
+                            <label>What requirements will the data satisfy?</label>
+                            <textarea class="form-control">The data will be used as testing and prototyping of service enablement and dissemination for OAML datasets which is phase 2 of the OAML Cloud / Modernization project.></textarea>
+                        </div>
+                        <div class="form-group" id="question2">
+                            <label>What is the intended data use or application?</label>
+                            <textarea class="form-control">The data will be used for testing only on local systems. In the case of DBDB-V level 2, it will be tested on a local SIPR machine in our SIPR environment (not on the SIPR network).></textarea>
+                        </div>
+                        <div class="form-group" id="question3">
+                            <label>Why will the need not be satisfied by data from other sources?</label>
+                            <textarea class="form-control">We need to use data provided in OAML for prototyping service-enablement of OAML products. We also need to ensure our algorithms for service enablement will work for each level of DBDB-V, since each level provides different resolutions as well as data size.</textarea>
+                        </div>
+
+                        <div class="form-group" id="question4">
+                            <label>Is the need urgent, critical or routine? What production requirement, system or production build
+                                does it satisfy?</label>
+                            <textarea class="form-control">Urgent in regards to the timeframe for the OAML Modernization project.></textarea>
+                        </div>
+
+                        <div class="form-group" id="question5">
+                            <label>How will the data be protected?</label>
+                            <textarea class="form-control">The data will be solely used by NRL on local development machines. Level 2 will be in our SIPR room at building 1009 on a local SIPR development machine. None of the DBDB-V data will be publicly accessible or distributed through our network.</textarea>
+                        </div>
+
+                        <div class="form-group" id="question6">
+                            <label>Identify who the receiving or potential customers/users/commands/activities/contractors will
+                                be.</label>
+                            <p class="form-text text-muted">Provide a comprehensive listing and a copy of DD2345 and DD254 for each contractor involved.</p>
+                            <textarea class="form-control">Receiving customers would be NRL government employees: Sylvia Charchut, Elias Ioup.</textarea>
+                        </div>
+
+                        <div class="form-group" id="question7">
+                            <label>Will the product be part of a foreign military sale (FMS)? If so, then idenfity what country(ies),
+                                who the customers will be, and include the case number.</label>
+                            <textarea class="form-control">No</textarea>
+                        </div>
+
+                        <div class="form-group" id="question8">
+                            <label>If outside the DOD, what government branch, domestic/commercial activity, or country will the
+                                data be given to and/or shared with?</label>
+                            <p class="form-text text-muted">If this does not apply to you, please fill in the blank as "N/A"</p>
+                            <textarea class="form-control">N/A</textarea>
+                        </div>
+                        <p><button class="btn btn-success btn-lg submit" id="submit-form" value="SubmitRequest">Submit</button></p>
+                    </section>
+
+                    <hr>
+                    <div class="form-nav">
+                        <a href="#form-progress" id="form-prev" class="btn btn-primary" style="display:none;">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a href="#form-progress" id="form-next" class="btn btn-info">Next
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+#parse("templates/footer.vm")

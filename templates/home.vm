@@ -1,0 +1,14 @@
+#set( $pageTitle = "Home" ) 
+#parse("header.vm") 
+
+<div class="container text-center landing-page">
+    <h2 class="page-title">OAML</h2>
+    <h3><i>Oceanographic and Atmospheric Master Library</i></h3>
+    <div class="buttons">
+        <a href="?submit=Inventory" class="btn btn-primary btn-lg">View inventory</a>
+        <a href="?submit=ProductRequest" class="btn btn-info btn-lg">Submit Product Request Form</a>
+        <a href="?submit=PECP" class="btn btn-primary btn-lg">Submit a PECP Form</a>
+    </div>
+</div>
+
+#parse("footer.vm")

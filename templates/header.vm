@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=utf-8>
+    <meta content="IE=edge" http-equiv=X-UA-Compatible>
+    <meta content="width=device-width,initial-scale=1" name=viewport>
+    <title>$pageTitle</title>
+    
+    <link rel="icon" type="image/x-icon" href="https://spaceprimate.github.io/oaAssets/img/favicon.ico" />
+    <link rel="stylesheet" href="https://spaceprimate.github.io/oaAssets/libs/bootstrap/dist/css/yeti.css">
+    <link rel="stylesheet" href="https://spaceprimate.github.io/oaAssets/css/style.css">
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body id="top">
+#parse("macros.vm")
+#parse("navigation.vm")
+<div id="main">

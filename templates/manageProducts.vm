@@ -1,0 +1,204 @@
+#set( $pageTitle = "Products" )
+#parse("header.vm")
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <h2>OAML Products</h2>
+            #products()
+        </div>
+
+        <div class="col-md-5">
+            <h2>Add a New Product</h2>
+            <form id="addProduct" method="get">
+                <div class="form-group">
+                    <label for="prodCategory" class="control-label">Category</label>
+                    <select name="productType" class="form-control" id="prodCategory" required>
+                                    <option>Algorithm</option>
+                                    <option>Model</option>
+                                    <option>Database</option>
+                                </select>
+                </div>
+                <div id="databases" class="form-group">
+                    <label for="dbTypes" class="control-label">Database Type</label>
+                    <select name="productSubType" class="form-control" id="dbTypes" required>
+                                    #foreach($databaseType in $databaseTypes)
+                                        <option>$databaseType</option>
+                                    #end
+                                </select>
+                </div>
+                <div id="models" class="form-group">
+                    <label for="modelTypes" class="control-label">Model Type</label>
+                    <select name="productSubType" class="form-control" id="modelTypes" required>
+                                    #foreach($modelType in $modelTypes)
+                                        <option>$modelType</option>
+                                    #end
+                                </select>
+                </div>
+                <div class="form-group">
+                    <label for="prodName" class="control-label">Name</label>
+                    <input type="text" name="name" id="prodName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="prodVersionNumber" class="control-label">Version Number</label>
+                    <input type="text" name="versionNumber" id="prodVersionNumber" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="prodVersionDesc" class="control-label">Version Description</label>
+                    <input type="text" name="versionDescription" id="prodVersionDesc" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="prodVersionRlsDate" class="control-label">Version Release Date</label>
+                    <input type="text" name="versionReleaseDate" id="prodVersionRlsDate" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="prodDescription" class="control-label">Description</label>
+                    <textarea id="prodDescription" name="productDescription" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prodDistribution" class="control-label">Distribution</label>
+                    <select class="form-control" name="productDistribution" id="prodDistribution" name="prodDistribution" required>
+                        <option>A</option>
+                        <option>C4</option>
+                        <option>CNO, Dir. SSP Release</option>
+                        <option>D4</option>
+                        <option>OAML or CNMOC Release</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="prodClassification" class="control-label">Classification</label>
+                    <select class="form-control" name="productClassification" id="prodClassification" required>
+                        <option>UNCLASSIFIED</option>
+                        <option>SECRET</option>
+                        <option>CONFIDENTIAL</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-default" type="submit" name="addProduct" value="addProduct">Add Product</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog">
+        <form id="editForm" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Product</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="type" class="control-label">Product Category</label>
+                    <select name="productType" id="type" class="form-control" required>
+                                <option>Algorithm</option>
+                                <option>Database</option>
+                                <option>Model</option>
+                            </select>
+
+                    <label for="subtype" id="subcatLabel" class="control-label">Product Subcategory</label>
+                    <input type="text" name="productSubType" id="subtype" class="form-control" />
+
+                    <label for="name" class="control-label">Product Name</label>
+                    <input type="text" name="name" id="name" class="form-control" required/>
+
+                    <label for="description" class="control-label">Product Description</label>
+                    <textarea id="description" name="productDescription" class="form-control" required></textarea>
+
+                    <label for="classification" class="control-label">Product Classification</label>
+                    <select name="productClassification" id="Classification" class="form-control" required>
+                                <option>UNCLASSIFIED</option>
+                                <option>CONFIDENTIAL</option>
+                                <option>SECRET</option>
+                            </select>
+
+                    <label for="distribution" class="control-label">Product Distribution Level</label>
+                    <select class="form-control" name="productDistribution" id="distribution" required>
+                                <option>A</option>
+                                <option>C4</option>
+                                <option>CNO, Dir. SSP Release</option>
+                                <option>D4</option>
+                                <option>OAML or CNMOC Release</option>
+                            </select>
+
+                    <label for="constituents" class="control-label">Product Constituents</label><br> #foreach($prod in $products)
+                    <input type="checkbox" name="productConstituents" value="$prod.getId()">$prod.getName()<br> #end
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" data-dismiss="modal" type="button">Cancel</button>
+                    <button class="btn btn-success" type="submit" name="editProduct" id="editProduct">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var categories = [];
+        var subcategories = [];
+
+        $("button[name='requestButton']").hide();
+        $('span.label').each(function () {
+            var text = $(this).text();
+            if ($(this).text() == "UNCLASSIFIED") {
+                $(this).toggleClass('label-success');
+            } else if ($(this).text() == "CONFIDENTIAL") {
+                $(this).toggleClass('label-warning');
+            } else {
+                $(this).toggleClass('label-danger');
+            }
+        });
+
+        $('#databases').hide();
+        $('#models').hide();
+
+        $('#prodCategory').click(function () {
+            if ($(this).val() == "Database") {
+                $('#databases').show();
+                $('#models').hide();
+            } else if ($(this).val() == "Model") {
+                $('#models').show();
+                $('#databases').hide();
+            } else {
+                $('#models').hide();
+                $('#databases').hide();
+            }
+        });
+
+        $('#delete').click(function () {
+            return confirm('Are you sure you want to delete this product?');
+        });
+        $(".edit").click(function (btn) {
+            var id = $(this).val();
+            var type = $('#type' + id).text();
+            var subtype = $('#subType' + id).text();
+            var name = $('#name' + id).text();
+            var classification = $('#classification' + id).text();
+            var distribution = $('#distribution' + id).text();
+            var description = $('#description' + id).text();
+            var constituents = $('#constituents' + id).text();
+
+            $("#type").val(type);
+            if (subtype != "") {
+                $("#subtype").val(subtype);
+            }
+            $("#name").val(name);
+            $("#description").val(description);
+            $("#classification").val(classification);
+            $("#distribution").val(distribution);
+            if (constituents != "") {
+                $("#constituents").val(constituents);
+            }
+            $("#editProduct").val(id);
+            $("#editModal").modal();
+        });
+        $("#editProduct").click(function () {
+            return confirm(
+                'WARNING! Saving your edits will permanently modify this product. Are you sure?');
+        });
+    });
+</script>
+
+#parse("footer.vm")

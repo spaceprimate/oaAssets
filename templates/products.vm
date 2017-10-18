@@ -1,0 +1,93 @@
+#set( $pageTitle = "Products" )
+#parse("header.vm")
+
+<div id="inventorydiv" class="container">
+    <div class="pull-right product-filters toggle-filter">
+        <a href="#" class="pull-right filter-toggle show-xs" style="margin-top: 4px; font-size: 20px;">
+            <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        <div class="input-group pull-left" style="width: 206px;">
+            <form id="searchForm">
+                <input class="form-control" placeholder="Search for..." style="display: inline-block; width: 150px; min-width: auto;" id="pSearch">
+                <span class="input-group-btn" style="display: inline-block;">
+                    <button class="btn btn-default" id="pSearchButton" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </form>
+        </div>
+        <select id="pDist" class="form-control form-select pull-left">
+            <option value="" disabled selected>Distribution: </option>
+            <option>all</option>
+        </select>
+        <a href="#" id="reset-filter" class="filter-link pull-left">clear</a>
+    </div>
+    <div class="toggle-filter">
+        <a href="#" class="pull-right show-xs filter-toggle" style="margin-top: 4px; font-size: 20px;" title="filter" alt="filter">
+            <span class="glyphicon glyphicon-filter"></span>
+        </a>
+        <h2 class="page-title">OAML Products</h2>
+    </div>
+    
+    #products()
+
+
+</div>
+
+
+
+
+
+     <script>
+         $(document).ready(function() {
+
+
+    #foreach($product in $algorithms)
+    products.products.push(
+        {
+            id: '$product.id',
+            name: '$product.name',
+            classification: '$product.productClassification',
+            distribution: '$product.productDistribution',
+            //description: 	'$product.productDescription',
+            type: '$product.productType.value()',
+            subType: '$!product.productSubType.value()',
+            constituents: '$product.productConstituents.product.name'
+        }
+    );
+    #end
+    
+    #foreach($product in $models)
+    products.products.push(
+        {
+            id: '$product.id',
+            name: '$product.name',
+            classification: '$product.productClassification',
+            distribution: '$product.productDistribution',
+            //description: 	'$product.productDescription',
+            type: '$product.productType.value()',
+            subType: '$!product.productSubType.value()',
+            constituents: '$product.productConstituents.product.name'
+        }
+    );
+    #end
+    
+    #foreach($product in $databases)
+
+    products.products.push(
+        {
+            id: '$product.id',
+            name: '$product.name',
+            classification: '$product.productClassification',
+            distribution: '$product.productDistribution',
+            //description: 	'$product.productDescription',
+            type: '$product.productType.value()',
+            subType: '$!product.productSubType.value()',
+            constituents: '$product.productConstituents.product.name'
+        }
+    );
+    #end
+
+    controls.products();
+
+         });
+     </script>
+#parse("footer.vm")

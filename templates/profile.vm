@@ -1,0 +1,51 @@
+#set( $pageTitle = "My Account" )
+#parse("header.vm")
+
+<div class="container">
+    <form>
+        <h2>$user.getFirstName() $user.getLastName()</h2>
+        <div class="row">
+            <div class="col-sm-6">
+                <section>
+                    <h3>Personal Information</h3>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" value="$user.getUsername()" />
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" class="form-control" value="$user.getFirstName() $user.getLastName()" />
+                </section>
+            </div>
+            <div class="col-sm-6">
+                <section>
+                    <h3>
+                        Agency Information
+                        <div class="pull-right">
+                            <button type="button" id="companyEdit" class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span> Edit Company Information</button>
+                            <button name="save" id="companySave" value="companySave" class="btn btn-primary btn-sm">Save</button>
+                        </div>
+                    </h3>
+                        <label for="agencyType">Agency Type</label>
+                        <input type="text" name="Agency" id="agencyType" class="form-control agencyInfo" value="$user.getAgency()" />
+                        <label for="specifiedAgency">Specific Agency</label>
+                        <input type="text" name="SpecifiedAgency" id="specifiedAgency" class="form-control agencyInfo" value="$user.getSpecifiedAgency()"/>
+                        <label for="email">Email</label>
+                        <input type="email" name="Email" id="email" class="form-control agencyInfo" value="$user.getEmail()" />
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" name="PhoneNumber" id="phone" class="form-control agencyInfo" value="$user.getPhoneNumber()" />
+                </section>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("input").prop('disabled', true);
+        $("#companySave").hide();
+        $("#companyEdit").click(function () {
+            $("#companyEdit").hide();
+            $("#companySave").show();
+            $(".agencyInfo").prop('disabled', false);
+        });
+    });
+</script>
+#parse("footer.vm")

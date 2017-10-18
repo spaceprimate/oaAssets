@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset=utf-8>
+    <meta content="IE=edge" http-equiv=X-UA-Compatible>
+    <meta content="width=device-width,initial-scale=1" name=viewport>
+    <title>Create an Account</title>
+
+    <link rel="icon" type="image/x-icon" href="https://spaceprimate.github.io/oaAssets/img/favicon.ico" />
+    <link rel="stylesheet" href="https://spaceprimate.github.io/oaAssets/libs/bootstrap/dist/css/yeti.css">
+    <link rel="stylesheet" href="https://spaceprimate.github.io/oaAssets/css/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body id="top">
+
+    <nav class="navbar navbar-inverse navbar-user">
+        <div class="container-fluid">
+            <ul class="navbar-nav">
+                <li>
+                    <a href="#" onclick="window.history.back()" style="display:block; padding: 4px;">
+                        <span class="glyphicon glypyicon-chevron-left"></span>Go Back</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- <form action="/" method="get">
+    <button class="btn btn-link">Back</button>
+</form> -->
+    <div id="main">
+        <div class="container">
+            <h2 class="page-title">Create an Account</h2>
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3" id="registrationForm">
+                    <div class="form-wrapper">
+                        <form id="registerForm" name="registerForm" method="post" action="/Home" enctype="multipart/form-data">
+                            <section>
+                                <h3>Requestor Information</h3>
+                                <div class="form-group has-feedback">
+                                    <label for="firstName" class="col-form-label control-label">First Name</label>
+                                    <input class="form-control" type="text" id="firstName" name="FirstName" maxlength="16" required>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label for="lastName" class="col-form-label control-label">Last Name</label>
+                                    <input class="form-control" type="text" id="lastName" name="LastName" maxlength="16" required>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label for="phone" class="col-form-label control-label">Phone Number</label>
+                                    <input type="tel" id="phone" name="PhoneNumber" class="form-control" placeholder="(XXX)-XXX-XXXX" required>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label for="Email" class="col-form-label control-label">Email</label>
+                                    <input class="form-control" type="email" id="Email" name="Email" required>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label for="Username" class="col-form-label control-label">Username</label>
+                                    <input class="form-control" type="text" id="Username" name="Username" pattern="[A-Za-z0-9_]{3,15}" data-remote="/RegistrationCheck"
+                                        data-remote-error="Username unavailable" required title="Username consists of 3-15 characters. Valid characters are numbers, letters, and the underscore.">
+                                    <p id="usernameHelp" class="form-text text-muted">
+                                        Your username length must be 3-15 characters. Valid characters are numbers, letters, and the underscore.
+                                    </p>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label for="Password" class="col-form-label control-label">Password</label>
+                                    <input class="form-control" type="password" id="Password" name="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
+                                        title="Password must contain at least one number and one uppercase and lowercase letter, and at least 8 characters.">
+                                    <p id="passwordHelp" class="form-text text-muted">
+                                        Your password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one
+                                        number.
+                                    </p>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label class="col-form-label control-label">Confirm Password</label>
+                                    <input class="form-control" type="password" id="passwordConfirm" data-match="#Password" data-match-error="Passwords do not match"
+                                        placeholder="Confirm Password" required>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label for="agency" class="control-label">Your Agency:</label>
+                                    <select class="form-control" id="agency" name="Agency" required>
+                                        <option>DOD</option>
+                                        <option>U.S. Government Agency</option>
+                                        <option>Foreign Country</option>
+                                        <option>FOIA</option>
+                                        <option>Other</option>
+                                    </select>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback" id="specagency">
+                                    <label for="SpecifiedAgency" class="col-form-label control-label">Specify: </label>
+                                    <textarea maxlength="100" id="SpecifiedAgency" name="SpecifiedAgency" class="form-control" placeholder="Specify (Military Branch, Agency, Activity or Country):"
+                                        required></textarea>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label class="control-label">Are you a contractor? </label>
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" id="yes" value="true" name="Contractor">Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" id="no" value="false" name="Contractor">No
+                                        </label>
+                                    </div>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="row"></div>
+                                <div id="submission">
+                                    <div class="form-group has-feedback">
+                                        <label for="contractNumber" class="col-form-label control-label">Contract Number</label>
+                                        <input class="form-control" type="text" id="contractNumber" maxlength="16" name="ContractNumber">
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label for="contractStartDate" class="col-form-label control-label">Contract Start Date</label>
+                                        <input class="form-control" type="date" id="contractStartDate" name="ContractStart" placeholder="mm/dd/yyyy">
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label for="contractEndDate" class="col-form-label control-label">Contract Expiration Date</label>
+                                        <input class="form-control" type="date" id="contractEndDate" name="ContractExpire" placeholder="mm/dd/yyyy">
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label class="control-label">Upload DD Forms 254-E and 2345 below.</label>
+                                        <input type="file" name="fileupload" multiple>
+                                        <p id="submissionHelp" class="form-text text-muted">Use Ctrl or Shift to select multiple files from the file explorer.</p>
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <h3>Sponsor Information</h3>
+                                <div name="SponsorInfo">
+                                    <div class="form-group has-feedback">
+                                        <label for="SponsorName" class="col-form-label control-label">Sponsor Name</label>
+                                        <input type="text" id="contractorName" id="SponsorName" name="SponsorName" maxlength="32" class="form-control" required>
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="SponsorOrg" class="col-form-label control-label">Sponsor Organization</label>
+                                                <input type="text" id="SponsorOrg" name="SponsorOrg" maxlength="25" class="form-control" required>
+                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                <div class="help-block with-errors"></div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="SponsorOfficeCode" class="col-form-label control-label">Sponsor Office Code</label>
+                                                <input type="text" id="SponsorOfficeCode" name="SponsorOfficeCode" maxlength="10" class="form-control" required>
+                                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                <div class="help-block with-errors"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label for="SponsorPhone" class="col-form-label control-label">Sponsor Phone Number</label>
+                                        <input type="tel" id="sponsorphone" name="SponsorPhone" class="form-control" placeholder="(XXX)-XXX-XXXX" required>
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label for="SponsorDsn" class="col-form-label control-label">Sponsor DSN</label>
+                                        <input type="tel" id="sponsordsn" name="SponsorDsn" class="form-control" placeholder="(XXX)-XXX-XXXX" required>
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label for="SponsorEmail" class="col-form-label control-label">Sponsor Email</label>
+                                        <input type="email" id="sponsoremail" name="SponsorEmail" class="form-control" required>
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                            </section>
+                            <button type="submit" class="btn btn-primary" value="registerSubmit">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#submission').hide();
+            var contractor = ('[name="Contractor"');
+            $(contractor).change(function () {
+                if ($(this).val() == "true") {
+                    $('#submission').show();
+                    $('#submission :input').each(function () {
+                        $(this).prop('required', true);
+                    })
+                } else {
+                    $('#submission').hide();
+                    $('#submission :input').each(function () {
+                        $(this).prop('required', false);
+                    })
+                }
+            });
+            $('#registerForm').submit(function () {
+                alert(
+                    'We have received your submission. Please look for an email within the next few days to receive notification on your account creation status.'
+                );
+            });
+        });
+    </script>
+
+
+
+
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <a href="#top">Back to top</a>
+                    </div>
+
+                    <p>Contact:
+                        <a href="#">example@test.net</a>
+                        <span class="vr"></span> Copyright / Terms info here</p>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://spaceprimate.github.io/oaAssets/js/oaml.js"></script>
+</body>
+
+</html>

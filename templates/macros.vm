@@ -1,0 +1,176 @@
+#macro (welcomeBanner)
+	<form role="form" class="text-center" method="get">
+		<nav class="navbar navbar-default navbar-user">
+			<div class="container-fluid">
+			    <div class="navbar-left user-info">Hi, $!user.FirstName!</div>
+				<ul class="nav navbar-nav navbar-right">
+				  <li>
+				      <button class="btn btn-link pull-right" type="submit" name="submit" value="viewProfile" formmethod="get" formaction="/Profile">My Account</button>
+				  </li>
+				  #if ($user.getUserRole().equals("MANAGER"))
+				    <li>
+				        <button class="btn btn-link pull-right" type="submit" name="submit" value="manageProducts" formmethod="get" formaction="/InventoryManager">Manage Products</button>
+				    </li>
+				  #end
+				  <li>
+				       <button class="btn btn-link pull-right" type="submit" name="submit" value="viewNotifications" formmethod="get" formaction="/TaskManager">
+				       Notifications
+				        #if ( $notifications.size() > 0 )
+				            <span class="badge">$notifications.size()</span>
+				        #end
+				        </button>
+				  </li>
+				  <li>
+                      <button class="btn btn-link pull-right" type="submit" formmethod="get" formaction="/Logout"><a>Logout</a></button>
+                  </li>
+				</ul>
+			</div>
+		</nav>
+	</form>
+#end
+
+
+
+#macro( productPanel $t $parent)
+  <div class="panel panel-default product" id="product-$product.id">
+
+    <button name="requestButton" type="button" value="$product.id" class="btn btn-success requestButton" data-id="$product.id">
+            <span class="hide-active">Add</span>
+            <span class="show-active glyphicon glyphicon-ok"></span>
+              <span class="hidden" id="id$product.id">$product.id</span>
+              <span class="hidden" id="name$product.id">$product.name</span>
+              <span class="hidden" id="classification$product.id">$product.getClassification()</span>
+              <span class="hidden" id="distribution$product.id">$product.getDistribution()</span>
+              <span class="hidden" id="description$product.id">$product.getDescription()</span>
+              <span class="hidden" id="type$product.id">$product.getType().getValue()</span>
+              <span class="hidden" id="subType$product.id">$!product.getSubtype().getValue()</span>
+              <span class="hidden" id="constituents$product.id">$product.productConstituents.product.name</span>
+   </button>
+
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#$parent" href="#$t$foreach.count$product.getId()">
+            $product.getName()
+        </a>
+        <span id="$product.getId()" class="label pull-right">$product.getClassification()</span>
+      </h4>
+    </div>
+    <div id="$t$foreach.count$product.id" class="panel-collapse collapse">
+      <div class="panel-body">
+           <p>$product.getDescription()</p>
+           <p>Distribution: $product.getDistribution()</p>
+            <p>Versions:</p>
+            <p>
+		   <select id="versionInfo$product.id" name="versionInfo" style="width: 150px;">
+		   #foreach( $version in $product.getVersions())
+		        #if($version.active)
+		            <option>$version.number</option>
+                #else
+                    <option disabled>$version.number</option>
+                #end
+                <option id="versionDesc$product.id" hidden disabled>$version.getDescription()</option>
+                <option id="versionReleaseDate$product.id" hidden disabled>$version.releaseDate</option>
+		   #end
+		   </select>
+		   </p>
+		   #if( $product.productConstituents.length >= 1)
+		   <p>Constituents (Other Products Required): </p>
+		       #foreach( $item in $product.productConstituents.product )
+		            <li>$item.name - $item.productClassification</li>
+		       #end
+		   #end
+
+          #if($canModify)
+             <form method="post" action="/InventoryManager">
+             <p>
+               <button id="add" name="addVersion" type="button" value="$product.getId()" class="btn btn-success add">Add Version</button>
+               <button id="edit" name="editProduct" type="button" value="$product.getId()" class="btn btn-warning edit">Edit Product</button>
+               <button id="delete" name="deleteProduct" value="$product.getId()" class="btn btn-danger">Delete Product</button>
+               #if ($product.isArchived())
+                  <button id="restore" name="restoreProduct" value="$product.getId()" class="btn btn-info">Restore Product</button>
+               #else
+                  <button id="archive" name="archiveProduct" value="$product.getId()" class="btn btn-info">Archive Product</button>
+               #end
+             </p>
+             <p><i>Last Modified: $product.getLastModified()</i></p>
+             </form>
+          #end
+      </div>
+    </div>
+  </div>
+#end
+
+#macro( products )
+        <h3 class="categoryTitle" data-heading="algorithms"><a href="#algorithms" data-toggle="collapse">Algorithms</a></h3>
+        <div id="algorithms" class="panel-group collapse">
+            #foreach( $product in $algorithms )
+                #productPanel("algorithmCollapse" "algorithms")
+            #end
+        </div>
+
+        <h3 class="categoryTitle"  data-heading="models"><a href="#subModels" data-toggle="collapse">Models</a></h3>
+        <div id="subModels" class="sub-panel-group collapse">
+        #foreach( $type in $modelTypes )
+            <h4 class="categoryTitle"  data-heading="$type"><a data-toggle="collapse" href="#accordion$foreach.count">$type</a></h4>
+            <div class="panel-group collapse" id="accordion$foreach.count">
+            #foreach( $product in $models )
+                #if($product.getSubtype().getValue().equals($type))
+                    #productPanel("modelCollapse$foreach.count" "$type models")
+                #end
+            #end
+            </div>
+        #end
+        </div>
+
+        <h3 class="categoryTitle"  data-heading="databases"><a href="#subDatabases" data-toggle="collapse">Databases</a></h3>
+        <div id="subDatabases" class="sub-panel-group collapse">
+        #foreach( $type in $databaseTypes )
+            <h4 class="categoryTitle"  data-heading="$type"><a data-toggle="collapse" href="#accordion2$foreach.count">$type</a></h4>
+            <div class="panel-group collapse" id="accordion2$foreach.count">
+               #foreach( $product in $databases )
+               	#if($product.getSubtype().getValue().equals($type))
+               		#productPanel("databaseCollapse$foreach.count" "accordion2$foreach.count")
+               	#end
+               #end
+            </div>
+        #end
+        </div>
+#end
+
+
+#macro( navigation )
+
+	<nav class="navbar navbar-main">
+	    <div class="container">
+	        <form method="get">
+            <ul class="nav navbar-nav">
+                <li><button class="btn btn-link" name="submit" formaction="/Home">Home</button></li>
+                <li><button class="btn btn-link" name="submit" value="viewProducts" formaction="/Inventory">Products</button></li>
+                <li class="dropdown">
+	                <a href="#" class="dropdown-toggle btn" style="padding-top:6px;"data-toggle="dropdown" role="button">Forms <span class="caret"></span></a>
+	                <ul class="dropdown-menu">
+	                  <li><button class="btn btn-link" name="submit" value="ProductRequest" formaction="/Inventory">Product Request Form</button></li>
+	                  <li><button class="btn btn-link" name="submit" value="PECPRequest" formaction="PECPRequest">PECP Form</button></li>
+	                </ul>
+	            </li>
+            </ul>
+            </form>
+	    </div>
+	</nav>
+	
+#end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

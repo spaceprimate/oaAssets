@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset=utf-8>
+	<meta content="IE=edge" http-equiv=X-UA-Compatible>
+	<meta content="width=device-width,initial-scale=1" name=viewport>
+	<title>OAML</title>
+
+	<link rel="icon" type="image/x-icon" href="https://spaceprimate.github.io/oaAssets/img/favicon.ico" />
+    <link rel="stylesheet" href="https://spaceprimate.github.io/oaAssets/libs/bootstrap/dist/css/yeti.css">
+    <link rel="stylesheet" href="https://spaceprimate.github.io/oaAssets/css/style.css">
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="border-top: 4px solid #0c2831;">
+	<div class="container splash-page text-center">
+		<div class="v-center">
+			<h1 class="page-title" style="margin-top: -15px; line-height: 1em;">OAML</h1>
+			<h3>
+				<i>Oceanographic and Atmospheric Master Library</i>
+			</h3>
+			<div style="margin-top: 32px; ">
+				<form method="post" action="/UserRegistration">
+					<p>
+						<button type="submit" class="btn btn-lg btn-primary" style="width: auto; display:inline-block;" name="submit" value="createAccount"
+						    formaction="/UserRegistration" formmethod="get">Create an account</button>
+						<button type="submit" class="btn btn-lg btn-info" style="width: auto; display: inline-block;" name="submit" value="signIn"
+						    formmethod="get" formaction="/Login">
+							<span class="glyphicon glyphicon-lock" style="font-size: 16px; color: #008cba;"></span> Sign in</button>
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function () {
+			$(function () {
+				$('.v-center').css({
+					'position': 'absolute',
+					'left': '50%',
+					'top': '50%',
+					'margin-left': function () {
+						return -$(this).outerWidth() / 2
+					},
+					'margin-top': function () {
+						return -$(this).outerHeight() / 2
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

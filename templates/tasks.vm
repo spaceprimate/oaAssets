@@ -1,0 +1,203 @@
+#set( $pageTitle = "Tasks" )
+#parse("header.vm")
+
+<div class="container">
+    <form id="taskView" role="form" method="post" action="/TaskManager" class="col-lg-6">
+        <h2>Active Tasks</h2>
+            #if ( $taskObj.size() > 0)
+                #foreach( $task in $taskObj )
+                #set( $jsonData = '#set( $jsonData = ' + $task + ' )' )
+                #evaluate ($jsonData)
+                <div class="panel panel-default">
+                    #if ($manager)
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><strong>$jsonData.get("id") $jsonData.get("name")</strong></h4>
+                            <h4 class="panel-title">$jsonData.get("createTime")</h4>
+                        </div>
+                        <div class="panel-body">
+                        <!-- Look at notepad++ for the rest of this code -->
+                            #if ($manager)
+                            	<button type="button" class="btn btn-warning" id="view$velocityCount" value="$velocityCount" onclick="view(this)" >View</button>
+                                <button class="btn btn-success" id="approve$jsonData.get("id")" type="submit" name="submit" value="approve$jsonData.get("id")">Approve</button>
+                                <button class="btn btn-danger"  id="reject$jsonData.get("id")" type="submit" name="submit" value="reject$jsonData.get("id")">Reject</button>
+                            #end
+                        </div>
+                    #else
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><strong>$jsonData.get("id") $jsonData.get("name")</strong></h4>
+                            <h4 class="panel-title">$jsonData.get("createTime")</h4>
+                        </div>
+                        <div class="panel-body">
+                            <p>You requested the following products on $jsonData.get("createTime"): </p>
+                            #foreach ($prod in $jsonData.get("products"))
+                                <p>$prod.get("name")</p>
+                            #end
+                            <h4><span class="label label-primary">Status: Under Review</span></h4>
+                        </div>
+                    #end
+                  </div>
+                #end
+            #else
+                <h3>You have no active tasks at this time.</h3>
+            #end
+    </form>
+    <div class="col-lg-6">
+        #if ($completedTasks.size() > 0 )
+            <h2>Completed Tasks</h2>
+            #foreach ($completedTask in $completedTasks )
+            	#set( $ctjson = '#set( $ctjson = ' + $completedTask + ' )' )
+                #evaluate ($ctjson)
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><strong>#$ctjson.get("id") $ctjson.get("name")</strong></h4>
+                        <h4 class="panel-title">Completed: $ctjson.get("endTime")</h4>
+                    </div>
+                    #if ($manager)
+                        <div class="panel-body">
+                            #if ($ctjson.get("name").equals("Product Request"))
+                                <p>$ctjson.user.FirstName $ctjson.user.LastName ($ctjson.user.Username) requested the following products: </p>
+                                #foreach ( $prod in $ctjson.get("products"))
+                                    <p>$prod.name</p>
+                                #end
+                            #elseif ($ctjson.name.equals("Account Request"))
+                                <p>$ctjson.user.FirstName $ctjson.user.LastName ($ctjson.user.Username) submitted a registration form.</p>
+                                    <p>Contractor: $ctjson.user.Contractor</p>
+                                    <p>Agency: $ctjson.user.Agency</p>
+                            #end
+                            #if ($ctjson.approved)
+                                <h4><span class="label label-success">Status: Approved</span></h4>
+                            #else
+                                <h4><span class="label label-danger">Status: Rejected</span></h4>
+                            #end
+                        </div>
+                    #else
+                        <div class="panel-body">
+                            #if ($ctjson.name.equals("Product Request"))
+                                <p>You requested the following products: </p>
+                                #foreach ($prod in $ctjson.get("products"))
+                                    <p>$prod.name</p>
+                                #end
+                                #if ($ctjson.approved)
+                                    <h4><span class="label label-success">Status: Approved</span></h4>
+                                #else
+                                    <h4><span class="label label-danger">Status: Rejected</span></h4>
+                                #end
+                            #else
+                                <p>Congratulations! Your account request was approved. You may now submit product requests to the system using this login.</p>
+                            #end
+                        </div>
+                    #end
+                 </div>
+            #end
+        #end
+    </div>
+</div>
+
+<div class="modal fade" id="taskModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+          	<h3 id="headername" class="mbdy"></h3>
+          	<h4 id="headerid" class="mbdy"></h4>
+          </div>
+          <div class="modal-body">
+	          <div class="row">
+				<div class="col-xs-6">
+					<span><strong>Agency: </strong></span><span id="agency" class="mbdy"></span>
+					<br>
+					<span><strong>Name: </strong></span><span id="name" class="mbdy"></span>
+					<br>
+					<span><strong>Email: </strong></span><span id="email" class="mbdy"></span>
+					<br>
+					<span><strong>Sponsor Name: </strong></span><span id="sponsorname" class="mbdy"></span>
+					<br>
+					<span><strong>Sponsor Org: </strong></span><span id="sponsororg" class="mbdy"></span>
+					<br>
+					<span><strong>Sponsor Code: </strong></span><span id="sponsorcode" class="mbdy"></span>
+					<br>
+					<span><strong>Sponsor Phone: </strong></span><span id="sponsorphone" class="mbdy"></span>
+					<br>
+					<span><strong>Sponsor Email: </strong></span><span id="sponsoremail" class="mbdy"></span>
+				</div>
+				<div class="col-xs-6">
+					<div id="ctrdiv" hidden>
+						<span><strong>Contract Start: </strong></span><span id="contractstart" class="mbdy"></span>
+						<br>
+						<span><strong>Contract Expiration: </strong></span><span id="contractend" class="mbdy"></span>
+						<br>
+						<span><strong>Contract Number: </strong></span><span id="contractnumber" class="mbdy"></span>	
+					</div>
+					<div id="taskproddiv" hidden>
+						<span><strong>Requested Products:</strong></span><span id="taskproducts" class="mbdy"></span>
+					</div>
+				</div>
+			  </div>
+          </div>
+          <div class="modal-footer">
+          	<form id="modalform" role="form" method="post" action="/TaskManager" class="col-lg-6">
+              <button type="button" class="btn btn-danger" onclick="closemodal()" data-dismiss="modal">Close</button>
+             </form>
+          </div>
+        </div>
+    </div>
+</div>
+<br />
+<script type="text/javascript">
+	var manager = '$manager';
+	var tasks = JSON.parse('$taskObj');
+	console.log(tasks);
+	$('#taskModal').modal();
+	$('#taskModal').modal('hide');
+		
+	function view(btn){
+		var taskid = $(btn).val()-1;
+		var tsk = tasks[taskid];
+		var prods = tsk.products;
+		var user = tsk.user;
+		var name = user.FirstName+" "+user.LastName;
+		var agency = user.Agency+"-"+user.SpecifiedAgency;
+		var sponsor = user.SponsorInfo;
+		
+		$("#headername").append(tsk.name);
+		$("#headerid").append(tsk.id);
+		$("#agency").append(agency);
+		$("#name").append(name);
+		$("#email").append(user.Email);
+		$("#sponsorname").append(sponsor.SponsorName);
+		$("#sponsororg").append(sponsor.SponsorOrg);
+		$("#sponsorcode").append(sponsor.SponsorOfficeCode);
+		$("#sponsorphone").append(sponsor.SponsorPhone);
+		$("#sponsoremail").append(sponsor.SponsorEmail);
+		
+		console.log(prods)
+		if(prods){
+			$.each(prods, function( index, value ) {
+			console.log(value);
+  				var p = $(value);
+  				console.log(p)
+  				$("#taskproducts").append("<li>"+value.name+"</li>");
+			});
+			
+			$("#taskproddiv").show();
+		}else{
+			$("#taskproddiv").hide();
+		}
+
+		
+		$('#taskModal').modal('show');
+	}
+	
+
+	
+	function closemodal(){
+		$(".mbdy").empty();
+		$("#ctrdiv").hide();
+	}
+
+    $('#taskView').submit(function() {
+        var confirmation = confirm("Are you sure?");
+        return confirmation;
+    });
+
+</script>
+#parse("footer.vm")

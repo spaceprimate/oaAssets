@@ -1,0 +1,44 @@
+<nav class="navbar navbar-inverse navbar-user">
+    <div class="container-fluid">
+        <div class="navbar-left user-info">Hi, $!user.FirstName!</div>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="?submit=Profile">My Account</a>
+            </li>
+            #if ($user.getUserRole().equals("MANAGER"))
+            <li>
+                <a href="?submit=Manage">Manage Products</a>
+            </li>
+            #end
+            <li>
+                <a href="?submit=Notifications">
+                    Notifications
+                    #if ( $notifications.size() > 0 )
+                    <span class="badge">$notifications.size()</span>
+                    #end
+                </a>
+            </li>
+            <li>
+                <a href="#">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<nav class="navbar navbar-main">
+    <div class="container">	        
+        <ul class="nav navbar-nav">
+            <li><a href="?submit=Home">Home</a></li>
+            <li><a href="?submit=Inventory">Products</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Forms <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="?submit=ProductRequest">Product Request Form</a></li>
+                  <li><a href="?submit=PECP">PECP Form</a></li>
+                </ul>
+              </li>
+            <li><a href="?submit=Login">Login</a></li>
+            <li><a href="?submit=Register">Register</a></li>
+        </ul>
+    </div><!--/.container -->
+</nav>
