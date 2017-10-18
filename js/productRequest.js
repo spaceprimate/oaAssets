@@ -51,9 +51,12 @@ $(document).ready(function () {
     //submit form if valid
     $(".submit").click(function (e) {
         e.preventDefault();
+        console.log("validate was called at all?");
         if (validation.validate("#section1, #section2, #section3, #section4")) {
+            console.log("validate returned true");
             $("#productRequest").submit();
         } else {
+            console.log("validate returned false");
             $("html, body").animate({
                 scrollTop: 0
             });

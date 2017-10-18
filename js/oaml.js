@@ -171,14 +171,14 @@ controls.products = function(){
 
     });
 
-    $("#searchForm").submit(function (event) {
-        event.preventDefault();
-        var term = $("#pSearch").val();
-        products.filter.title = true;
-        products.filter.titleTerm = term;
-        products.filter.updateFilter();
+    // $("#searchForm").submit(function (event) {
+    //     event.preventDefault();
+    //     var term = $("#pSearch").val();
+    //     products.filter.title = true;
+    //     products.filter.titleTerm = term;
+    //     products.filter.updateFilter();
 
-    });
+    // });
 
     $("#reset-filter").click(function (e) {
         products.filter.resetFilter();
