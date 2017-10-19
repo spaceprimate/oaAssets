@@ -1,11 +1,11 @@
-[x] - 	submit button not working
-[x] - 	for section indicator not adding "complete" class
-[x] - 	some of the radio buttons that fail checks aren't triggering correctly
-[x] - 	clean up and double check the code
-[x] - 	outline what you need to submit, then submit
-[] - 	submit
-
-
+[]	add version number
+[]	git commit
+[]	test
+[]	email jenna back
+[]	
+[]	
+[]	
+[]	
 
 
 ================= REMEMBER ========================

@@ -245,6 +245,8 @@ select.form-control {
  * PRODUCTS
  */
 
+ #selectedProducts span.version{padding-left: 12px;}
+
 #inventorydiv {
     margin-bottom: 36px;
 }

@@ -72,6 +72,7 @@ $(document).ready(function () {
         };
         $('#selectedProducts ul').append('<li class="selectedProduct list-group-item" data-id="' + product.id + '">' +
             product.name +
+            '<span class="version">Version: <b>' + product.version.number + '</b>' +
             '<span data-id="' + product.id + '" class="glyphicon glyphicon-remove pull-right pointer" alt="remove product" title="remove product"></span>' +
             '</li>');
         selectedProducts.push(product);
