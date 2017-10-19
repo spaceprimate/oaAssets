@@ -1,12 +1,8 @@
-[]	add version number
-[]	git commit
-[]	test
-[]	email jenna back
+[x]	add version number
+[x]	git commit
+[x]	test
+[x]	email jenna back
 []	
-[]	
-[]	
-[]	
-
 
 ================= REMEMBER ========================
 set the #parse files back to the original with "templates/" preceeding the vm file. 
