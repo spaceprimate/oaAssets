@@ -54,12 +54,16 @@ span.vr:before {
     display: none;
 }
 
-.label.UNCLASSIFIED {
+.label.UNCLASSIFIED, .label.unclassified, .label.Unclassified {
     background-color: #43ac6a;
 }
 
-.label.CONFIDENTIAL {
+.label.CONFIDENTIAL, .label.confidential, .label.Confidential {
     background-color: #e99002;
+}
+
+.label.SECRET, .label.secret, .label.Secret{
+    background-color: #f04124;
 }
 
 

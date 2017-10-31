@@ -287,14 +287,19 @@ $(document).ready(function () {
             $("#mediaPref").toggleClass("hidden", true);
         }
     });
-    $('span').each(function () {
+
+
+    $('span').each(function() {
         var text = $(this).text();
-        if ($(this).text() == "Unclassified") {
-            $(this).toggleClass('label-success');
-        } else if ($(this).text() == "Confidential") {
-            $(this).toggleClass('label-warning');
-        } else if ($(this).text() == "Secret") {
-            $(this).toggleClass('label-danger');
+        if ($(this).text().indexOf("Unclassified") >= 0) {
+             $(this).toggleClass('label-success');
         }
-    });
+        else if ($(this).text().indexOf("Confidential") >= 0) {
+             $(this).toggleClass('label-warning');
+        }
+        else if ($(this).text().indexOf("Secret") >= 0) {
+             $(this).toggleClass('label-danger');
+        }
+     });
+
 });
