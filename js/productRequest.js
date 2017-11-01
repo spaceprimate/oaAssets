@@ -307,7 +307,7 @@ $(document).ready(function () {
       * set to AMRDEC or Email
       */
 
-      $("#MailingPreference ipnut").change(function(){
+      $("#MailingPreference input").change(function(){
           var curVal = $("[name=MailingPreference]:checked").val();
           if(curVal == "AMRDEC" || curVal == "Email"){
             $("#MediaPreference input").removeAttr("required");
