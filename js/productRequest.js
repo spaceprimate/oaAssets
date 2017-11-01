@@ -306,7 +306,6 @@ $(document).ready(function () {
       * Hide and remove 'required' status of question 6, if mailing preference is 
       * set to AMRDEC or Email
       */
-
       $("#MailingPreference input").change(function(){
           var curVal = $("[name=MailingPreference]:checked").val();
           if(curVal == "AMRDEC" || curVal == "Email"){
@@ -317,11 +316,6 @@ $(document).ready(function () {
             $("#MediaPreference input").prop("required", true);
             $("#MediaPreference").show();
           }
-
-
       });
-
-    //   $("#MediaPreference input").prop("required", true);
-    //   $("#MediaPreference input").removeAttr("required");
 
 });
