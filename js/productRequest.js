@@ -307,6 +307,20 @@ $(document).ready(function () {
       * set to AMRDEC or Email
       */
 
+      $("#MailingPreference ipnut").change(function(){
+          var curVal = $("[name=MailingPreference]:checked").val();
+          if(curVal == "AMRDEC" || curVal == "Email"){
+            $("#MediaPreference input").removeAttr("required");
+            $("#MediaPreference").hide();
+          }
+          else{
+            $("#MediaPreference input").prop("required", true);
+            $("#MediaPreference").show();
+          }
+
+
+      });
+
     //   $("#MediaPreference input").prop("required", true);
     //   $("#MediaPreference input").removeAttr("required");
 
