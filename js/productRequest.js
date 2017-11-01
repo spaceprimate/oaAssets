@@ -253,7 +253,7 @@ $(document).ready(function () {
         radios.forEach(function (r) {
             var checked = false;
             $("input[name=" + r + "]").each(function () {
-                if ($(this).prop('checked')) {
+                if ($(this).prop('checked') || ! $(this).prop('required') ) {
                     checked = true;
                 }
             });
@@ -301,5 +301,13 @@ $(document).ready(function () {
              $(this).toggleClass('label-danger');
         }
      });
+
+     /**
+      * Hide and remove 'required' status of question 6, if mailing preference is 
+      * set to AMRDEC or Email
+      */
+
+      $("#MediaPreference input").prop("required", true);
+      $("#MediaPreference input").removeAttr("required");
 
 });
