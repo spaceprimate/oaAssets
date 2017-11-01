@@ -307,7 +307,7 @@ $(document).ready(function () {
       * set to AMRDEC or Email
       */
 
-      $("#MediaPreference input").prop("required", true);
-      $("#MediaPreference input").removeAttr("required");
+    //   $("#MediaPreference input").prop("required", true);
+    //   $("#MediaPreference input").removeAttr("required");
 
 });
