@@ -1,15 +1,10 @@
 /*
  * GENERAL
  */
-html{height: 100%;}
 body {
     margin: 0;
     padding: 0;
-    height: 100%;
-    padding-bottom: 92px;
 }
-#wrapper{min-height: 100%; position: relative;}
-footer#footer{height: 32px; position: absolute; bottom: -92px;}
 
 .center {
     position: absolute;
@@ -131,6 +126,24 @@ nav.navbar-main .nav>li>a:focus {
 /*
  * FOOTER
  */
+/* semi-sticky footer */
+html{height: 100%;}
+body {
+    height: 100%;
+    padding-bottom: 92px;
+}
+ #wrapper{min-height: 100%; position: relative;}
+ footer#footer {
+    background: #0b2832;
+    padding: 0px;
+    height: 92px; 
+    position: absolute; 
+    bottom: -92px; 
+    width: 100%;
+    color: #fff;
+}
+
+footer#footer .container{margin-top: 30px;}
 
 footer#footer li {
     float: left;
@@ -142,11 +155,7 @@ footer#footer p {
     clear: left;
 }
 
-footer#footer {
-    background: #0b2832;
-    padding: 30px 0;
-    color: #fff;
-}
+
 
 footer#footer a {
     color: #227b98;
