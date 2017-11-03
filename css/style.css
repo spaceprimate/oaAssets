@@ -1,11 +1,15 @@
 /*
  * GENERAL
  */
-
+html{height: 100%;}
 body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    padding-bottom: 92px;
 }
+#wrapper{min-height: 100%; position: relative;}
+footer#footer{height: 32px; position: absolute; bottom: -92px;}
 
 .center {
     position: absolute;
