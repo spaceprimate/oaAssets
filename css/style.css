@@ -127,19 +127,22 @@ nav.navbar-main .nav>li>a:focus {
  * FOOTER
  */
 /* semi-sticky footer */
-html{height: 100%;}
+html{height: 100%; padding-bottom: 92px;}
 body {
     height: 100%;
-    padding-bottom: 92px;
+    position:relative;
 }
- #wrapper{min-height: 100%; position: relative;}
+ /* #wrapper{min-height: 100%; position: relative;} */
+footer#footer {
+    position: absolute; 
+    bottom: -92px; 
+    width: 100%;
+} 
+
  footer#footer {
     background: #0b2832;
     padding: 0px;
     height: 92px; 
-    position: absolute; 
-    bottom: -92px; 
-    width: 100%;
     color: #fff;
 }
 
